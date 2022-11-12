@@ -17,7 +17,7 @@ namespace WenhaoLu_Assign1.Controllers
         /// <param name="n">the number of sides on the second die</param>
         /// <returns>the total ways when rolling the value of 10</returns>
         /// <example>
-        /// api/J2/DiceGame/12/4    ->     
+        /// api/J2/DiceGame/12/4    ->     4
         /// </example>
         [HttpGet]
         [Route("api/j2/DiceGame/{m}/{n}")]
