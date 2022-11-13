@@ -10,7 +10,7 @@ namespace WenhaoLu_Assign1.Controllers
     public class j2Controller : ApiController
     {
         /// <summary>
-        /// Adapted j2 - Roll the Dice
+        /// j2 - Roll the Dice (CCC)
         /// GET: api/j2/DiceGame/{m}/{n}
         /// </summary>
         /// <param name="m">the number of sides on the first die</param>
