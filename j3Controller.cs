@@ -23,9 +23,10 @@ namespace WenhaoLu_Assign1.Controllers
         public int Get(string message)
         {
 
-            // sorting the characters by the number of times pressing the button
-            // when input characters in array.firstLetter, that means Joe only needs to press the button for one time
+            // sort the characters by the number of times pressing the button
+            // when input characters in array.firstLetter, that means Joe only needs to press the button for one time (one time counts one second)
             // when input characters in array.secondLetter, that means Joe needs to press the button twice
+            // eg. Joe needs to press three times to type the character 'c', which would take 3 seconds
             char[] firstLetter = { 'a', 'd', 'g', 'j', 'm', 'p', 't', 'w' };
             char[] secondLetter = { 'b', 'e', 'h', 'k', 'n', 'q', 'u', 'x' };
             char[] thirdLetter = { 'c', 'f', 'i', 'l', 'o', 'r', 'v', 'y' };
@@ -33,8 +34,8 @@ namespace WenhaoLu_Assign1.Controllers
 
 
             // define variables 
-            // smsLength is the length of input string, will be used in loops, counting repeat time
-            // timeCount is the time used when pressing the specific button, ex. press 'c' counts for 4 seconds
+            // smsLength is the length of input string, will be used in loops, counting the repeats
+            // timeCount is the time used when pressing the specific button, eg. press 's' counts for 4 seconds
             // letterSum is the total time when typing all the letters (excludes pause time)
             int smsLength = message.Length;
             int timeCount = 0;
@@ -44,7 +45,8 @@ namespace WenhaoLu_Assign1.Controllers
             for (int i = 0; i <= smsLength - 1; i++)
             {
 
-                // check where the character locates (in four character arrays above) 
+                // check where the character locates (in four character arrays above)
+                // from the first character to the last, one by one
                 char smsLetter = message[i];
                 int firstLetterIdx = Array.IndexOf(firstLetter, smsLetter);
                 int secondLetterIdx = Array.IndexOf(secondLetter, smsLetter);
@@ -58,8 +60,9 @@ namespace WenhaoLu_Assign1.Controllers
                 }
 
 
+                // the input character should have an index number from the array, if not, then means the character doesn't exist in the array 
                 // when the input character locates in the firstLetter array, then count the pressing button time for 1 second
-                // when the input character locates in the secondLetter array, then count the pressing button time for 2 second
+                // when the input character locates in the secondLetter array, then count the pressing button time for 2 seconds
                 if (firstLetterIdx > -1)
                 {
                     timeCount = 1;
@@ -78,14 +81,16 @@ namespace WenhaoLu_Assign1.Controllers
                 }
 
 
-                // adding up every character's timeCount to total time
+                // add up every character's timeCount to total time
                 letterSum = letterSum + timeCount;
             }
 
 
             // a section to count the pause time
-            // sorting the characters by the position, ex. 'a', 'b', 'c' all locate on the phone button "2"
+            // sort the characters by the position, eg. 'a', 'b', 'c' all locate on the phone button "2"
             // when typing characters that are on the same phone button, user needs to pause 2 seconds for the interval
+            // eg. when typing 'a', user has to press phone button '2' one time first, 
+            // then wait (pause) for 2 seconds to press phone button '2' twice times to get 'b'
 
             char[] secondKeyLetter = { 'a', 'b', 'c' };
             char[] thirdKeyLetter = { 'd', 'e', 'f' };
@@ -98,38 +103,48 @@ namespace WenhaoLu_Assign1.Controllers
 
 
             // define variables 
-            // pauseLetter is the time used when typing characters on the same button, ex. press 'g', then pause 2 seconds, then press 'h'
+            // pauseLetter is the time used when typing characters on the same button
+            // eg. press 'g' one time, then pause 2 seconds, and then press the button twice to get 'h'
             // pauseSum is the total pause time
             int pauseLetter = 0;
             int pauseSum = 0;
 
-            //  a loop for checking the characters two-by-two to see if they locate on the same button
-            //  if they are on the same button, then count the pause time for 2 seconds  
+            //  a loop for checking the two adjacent characters to see if they locate on the same button
+            //  if they are on the same button, then will count the pause time for 2 seconds  
             for (int j = 1; j <= smsLength - 1; j++)
             {
                 // smsLetterFirst is the first character of the input string
-                // smsLetterNext is the next character of the input string (right after the first character)
+                // smsLetterNext is the next character of the input string (adjacent character)
+                // set initial value of j to 1, in order to avoid the array value exceeding error
                 char smsLetterFirst = message[j - 1];
                 char smsLetterNext = message[j];
 
                 // check if they locate in the same character array (in eight character arrays above) 
                 int letterKeyTwoFirst = Array.IndexOf(secondKeyLetter, smsLetterFirst);
                 int letterKeyTwoNext = Array.IndexOf(secondKeyLetter, smsLetterNext);
+        
                 int letterKeyThreeFirst = Array.IndexOf(thirdKeyLetter, smsLetterFirst);
                 int letterKeyThreeNext = Array.IndexOf(thirdKeyLetter, smsLetterNext);
+                
                 int letterKeyFourFirst = Array.IndexOf(fourthKeyLetter, smsLetterFirst);
                 int letterKeyFourNext = Array.IndexOf(fourthKeyLetter, smsLetterNext);
+                
                 int letterKeyFiveFirst = Array.IndexOf(fifthKeyLetter, smsLetterFirst);
                 int letterKeyFiveNext = Array.IndexOf(fifthKeyLetter, smsLetterNext);
+                
                 int letterKeySixFirst = Array.IndexOf(sixthKeyLetter, smsLetterFirst);
                 int letterKeySixNext = Array.IndexOf(sixthKeyLetter, smsLetterNext);
+                
                 int letterKeySevenFirst = Array.IndexOf(seventhKeyLetter, smsLetterFirst);
                 int letterKeySevenNext = Array.IndexOf(seventhKeyLetter, smsLetterNext);
+                
                 int letterKeyEightFirst = Array.IndexOf(eighthKeyLetter, smsLetterFirst);
                 int letterKeyEightNext = Array.IndexOf(eighthKeyLetter, smsLetterNext);
+                
                 int letterKeyNineFirst = Array.IndexOf(ninethKeyLetter, smsLetterFirst);
                 int letterKeyNineNext = Array.IndexOf(ninethKeyLetter, smsLetterNext);
 
+                // the adjacent input characters should have index numbers from the same array 
                 // when the adjacent input characters are in the array (on the same button), then count the pause time for 2 seconds
                 // check on eight phone buttons 
                 if (letterKeyTwoFirst > -1 && letterKeyTwoNext > -1)
